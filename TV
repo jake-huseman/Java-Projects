@@ -1,0 +1,227 @@
+/**
+ * 
+ * @author jakeh
+ * 
+ * This is used to simulate a TV with specific controls given int's.
+ * 
+ */
+public class TV 
+{
+	private double volume = 0.5;
+	private int start;
+	private int numChannels;
+	private int currentChannel;
+	private int previousChannel;
+	
+	/*
+	 * Incremental increase or decrease in volume when the volumeUp or volumeDown methods are called.
+	 */
+	public static final double VOLUME_INCREMENT = 0.07;
+	
+	/*
+	 * Constructs a new TV with givenNumChannels available channels, numbered consecutively beginning with givenStart
+	 */
+	public TV(int givenStart, int givenNumChannels)
+	{
+		start = givenStart;
+		numChannels = givenNumChannels;
+		currentChannel = givenStart;
+	}
+	
+	/*
+	 * Changes the channel down by 1, wrapping around to start + numChannels - 1 if the current channel is equal to start.
+	 */
+	public void channelDown()
+	{	
+		if(currentChannel - 1 >= start)
+		{
+			previousChannel = currentChannel;
+			currentChannel--;
+		}
+		else if(currentChannel - 1 <= start)
+		{
+			currentChannel = start + numChannels - 1;
+		}
+		
+		
+		//currentChannel = (start -  numChannels + 1) + start % numChannels; 
+	}
+	
+	/*
+	 * Changes the channel up by 1, wrapping around to start if the current channel can't go any higher.
+	 */
+	public void channelUp()
+	{
+		
+		if(currentChannel + 1 <= start + numChannels - 1)
+		{
+			previousChannel = currentChannel;
+			currentChannel++;
+		}
+		else if(currentChannel + 1 >= start + numChannels -1)
+		{
+			currentChannel = start;
+		}	
+		
+		//currentChannel = ((numChannels - start) + 1) + start % currentChannel;
+	
+		//currentChannel = ((currentChannel - start) + 1) % (start + numChannels);
+
+		//currentChannel = Math.min(currentChannel + 1,  start + numChannels - 1);
+		
+	}
+
+	/*
+	 * Returns a string representing the current channel and volume, where the volume is expressed as a percentage rounded to the nearest integer.
+	 */
+	public String display()
+	{
+		double volumePercent = volume * 100;
+		int displayVolume = (int)(Math.round(volumePercent));
+		
+		return "Channel " + currentChannel + " Volume " + displayVolume + "%";
+	}
+	
+	/*
+	 * Returns the current channel for this TV.
+	 */
+	public int getChannel()
+	{
+		
+		return currentChannel;
+	}
+	
+	/*
+	 * Returns the current volume for this TV.
+	 */
+	public double getVolume()
+	{
+		
+		return volume;
+	}
+	
+	/*
+	 * Sets the current channel to the most recent previous channel.
+	 */
+	public void goToPreviousChannel()
+	{
+		int temp;
+		
+		if(currentChannel == 0)
+		{
+			currentChannel = start;
+		}
+		else
+		{
+		currentChannel = previousChannel;
+		}
+		
+		//temp = currentChannel;
+		//previousChannel = currentChannel;
+		//currentChannel = previousChannel;
+		//currentChannel = temp;
+	}
+	
+	/*
+	 * Resets the value of the start channel.
+	 */
+	public void resetStart(int givenStart) 
+	{
+		
+				  //getChannel();
+          numChannels = givenStart + numChannels - 1;
+		  currentChannel = givenStart;
+		  previousChannel = givenStart;
+
+          
+          if (currentChannel > numChannels)
+          {
+        	currentChannel--;
+          }
+          else if (currentChannel < start)
+          {
+            currentChannel++;
+          }
+          
+		//start = givenStart;
+		//numChannels = start + numChannels - 1;
+		//if(currentChannel > start)
+		//currentChannel = start;
+	}
+	
+	/*
+	 * Resets the number of channels.
+	 */
+	public void resetNumChannels(int givenNumChannels)
+	{	
+		numChannels = start + givenNumChannels - 1;
+		currentChannel = getChannel() - 1;
+		
+		if(currentChannel > numChannels)
+		{
+			currentChannel--;
+		}	
+	}	
+	
+	/*
+	 * Sets the channel to then given channel number.
+	 * Math.max(currentChannel, start)
+	 */
+	public void setChannel(int channelNumber)
+	{
+		//I hope this isn't too complicated ): I couldn't figure out any other ways as shown below 
+		
+		if(channelNumber < start + numChannels - 1 && channelNumber > start)
+		{
+			previousChannel = currentChannel;
+
+			currentChannel = channelNumber;
+		}
+		else if(channelNumber > start + numChannels - 1)
+		{
+			currentChannel = start + numChannels - 1;
+		}
+		else
+		{
+			currentChannel = start;
+		}
+		
+			
+			
+		//currentChannel = Math.min(Math.max(channelNumber, start + numChannels - 1), start);
+		
+		//Math.max(Math.min(start, channelNumber), start + numChannels - 1);
+				
+		//Math.min(Math.max(channelNumber, start + numChannels - 1), start);
+		
+		//currentChannel = Math.min(Math.max(currentChannel, start), start + numChannels - 1);
+	}
+	
+	/*
+	 * Lowers the volume by VOLUME_INCREMENT, but not below 0.0.
+	 */
+	public void volumeDown()
+	{
+		volume -= VOLUME_INCREMENT;
+		if(volume <= 0)
+		{
+			volume = 0.0;
+		}
+		
+		//volume = Math.min(volume,  1.0) - VOLUME_INCREMENT;
+	}
+	
+	/*
+	 * Raises the volume by VOLUME_INCREMENT, but not above 1.0
+	 */
+	public void volumeUp()
+	{
+		volume += VOLUME_INCREMENT;
+		if(volume >= 1)
+		{
+			volume = 1.0;
+		}
+		
+		//volume = Math.max(volume,  0.0) + VOLUME_INCREMENT;
+	}
+}
