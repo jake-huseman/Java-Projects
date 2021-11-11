@@ -32,17 +32,28 @@ public class JustAnOrdinArrayDay
    */
   public static boolean isPalindrome(int[] arr, int start)
   {
-      int n = arr.length;
+	  int count = 0;
+	  if(start > arr.length)
+	  {
+		  return true;
+	  }
+		for(int i = start; i < arr.length; i++)
+		{
+			if(arr[i] == arr[(arr.length - i])
+			{
+				contunue;
+				count++
+			}
+		}
+		if(count == arr.length)
+		{
 
-      for(int i=start, j=n-1; i<(start+n)/2; i++, j--)
-      {
-    	  if(arr[i] != arr[j])
-    	  {
-    		  return false;
-    	  }
-      }
+		}
+  }
 
-      return true;
+  public static void main(String[] args)
+  {
+	  System.out.println(isPalindrome([1, 3, 7, 3, 1], 0));
   }
   
   /**
