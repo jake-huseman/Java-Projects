@@ -1,5 +1,3 @@
-package mini2;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.lang.reflect.Array;
@@ -33,52 +31,51 @@ public class JustAnOrdinArrayDay
   public static boolean isPalindrome(int[] arr, int start)
   {
 	  int count = 0;
-	  if(start > arr.length)
+	  if(start >= arr.length - 1)
 	  {
 		  return true;
 	  }
-		for(int i = start; i < arr.length; i++)
+		for(int i = start; i < arr.length - 1; i++)
 		{
-			if(arr[i] == arr[(arr.length - i])
+			if(arr[i] == arr[(arr.length - count) - 1])
 			{
-				contunue;
-				count++
+				count++;
+				continue;
 			}
 		}
-		if(count == arr.length)
+		if(count == arr.length - count ||count == arr.length - 1)
 		{
-
+			return true;
+		}
+		else
+		{
+			return false;
 		}
   }
 
-  public static void main(String[] args)
-  {
-	  System.out.println(isPalindrome([1, 3, 7, 3, 1], 0));
-  }
   
   /**
    * Creates an array representing the count of how many values in a given data
-   * set fall into each of a specified number of <em>bins</em>, 
+   * set fall into each of a specified number of bins,
    * where a bin is a sub-range of values within a given minimum and maximum.  
-   * (Such an array is also known as a <em>histogram</em>.)
-   * The size of each bin is always <code>(max - min) / numBins</code>, where 
-   * <code>numBins</code> is a parameter representing the number of bins.
-   * A number <em>x</em> goes into one of the bins as follows:
-   * <ul>
-   * <li>Bin 0: min &lt;=  <em>x</em>  &lt; min + binSize
-   * <li>Bin 1: min + binSize &lt;=  <em>x</em>  &lt; min + 2 * binSize
-   * <li>Bin 2: min + 2 * binSize &lt;=  <em>x</em>  &lt; min + 3 * binSize
-   * <li>...
-   * <li>Bin n - 1: min + (n - 1) * binSize &lt;=  <em>x</em>  &lt; max
-   * </ul>
-   * where n = <code>numBins</code>.  
-   * The method returns an array <code>arr</code> of length <code>numBins</code> such
-   * that <code>arr[i]</code> contains the <em>count</em> of values from the data set
+   * (Such an array is also known as a histogram)
+   * The size of each bin is always (max - min) / numBins, where
+   * numBins is a parameter representing the number of bins.
+   * A number x goes into one of the bins as follows:
+   *
+   * Bin 0: min <= x < min + binSize
+   * Bin 1: min + binSize <= x < min + 2 * binSize
+   * Bin 2: min + 2 * binSize <= x < min + 3 * binSize
+   * ...
+   * Bin n - 1: min + (n - 1) * binSize <= x < max
+   * where n = numBins.
+   * The method returns an array arr of length numBins such
+   * that arr[i] contains the count of values from the data set
    * that are in bin i. Thus, "putting a number into a bin" just means
    * incrementing the count at the appropriate bin index. 
    * <p>
-   *    * <em>Note:</em> The bin index for a value <em>x</em> can always be computed as
-   *  (<em>x</em> - min) / binSize, truncated down to the next lowest integer, so no
+   *  		<em>Note:</em> The bin index for a value x can always be computed as
+   *  (x - min) / binSize, truncated down to the next lowest integer, so no
    *  complicated conditional statements are needed to determine which bin
    *  <em>x</em> should go into!
    *  <p>
@@ -90,12 +87,12 @@ public class JustAnOrdinArrayDay
    * <pre>sortIntoBins(nums, 4, 2.0, 24.0);</pre>
    * binSize is (24.0 - 2.0)/4 = 5.5, so the bins are
    * <ul>
-   * <li>Bin 0: 2.0 &lt;= x &lt; 7.5
-   * <li>Bin 1: 7.5 &lt;= x &lt; 13.0
-   * <li>Bin 2: 13.0 &lt;= x &lt; 18.5
-   * <li>Bin 3: 18.5 &lt; 24.0
+   * Bin 0: 2.0 <= x < 7.5
+   * Bin 1: 7.5 <= x < 13.0
+   * Bin 2: 13.0 <= x < 18.5
+   * Bin 3: 18.5 <= x < 24.0
    * </ul>
-   * In this case the method returns the array [0, 1, 3, 2].
+   * In this case the method returns the array [0, 1, 4, 1].
    * @param data
    *   the data set
    * @param numBins
@@ -106,24 +103,40 @@ public class JustAnOrdinArrayDay
    *   upper bound (exclusive) for numbers to be included in the bins
    * @return
    *   array whose <em>i</em>th cell contains the number of values in bin <em>i</em>
-   */
+   *   how many numbers are in that data range given
+   **/
+
   public static int[] sortIntoBins(double[] data, int numBins, double min, double max)
   {
-      double binSize = (max-min)/numBins;
-      int arr[] = new int[numBins];
+	  // Bin n - 1: min + (n - 1) * binSize <= x < max
+	  // where n = numBins.
 
-      for(int i=0;i<arr.length;i++)
-             arr[i] = 0;
-      for(int i=0;i<data.length;i++)
-      {
-             if(data[i] >= min && data[i] <max)
-             {
-                    int bin_index = (int)((data[i] - min) / binSize);
-                    arr[bin_index]++;
-             }
-      }
-      return arr;
-}
+      double binSize = (max - min) / numBins; // range increment value
+      int[] arr = new int[numBins];
+	  double range = min;
+
+	  for(int i = 0; i < data.length - 1; i++)
+	  {
+		  //int binIndex = (int) ((i - min) / binSize);
+		  if(data[i] >= range && data[i] <= range + binSize) // determining if data[i] is in the current range. May need fixed here
+		  {
+				// increment arr[i] + 1
+		  }
+
+	  }
+
+
+
+	  return arr;
+  }
+	public static void main(String[] args)
+	{
+		double[] data = new double[]{18.0, 15.0, 8.0, 16.0, 14.0, 19.0};
+		int numBins = 4;
+		double min = 2.0;
+		double max = 24.0;
+		System.out.println(sortIntoBins(data, numBins, min, max));
+	}
   
   /**
    * Shifts the elements of the given array to the right by the given amount. 
@@ -420,7 +433,7 @@ public class JustAnOrdinArrayDay
     	  if (list.get(i) != list.get(j)) 
     	  {
              list.add(j + 1, list.get(i));
-              } 
+		  }
     	  else 
     	  {
     		  j--;
