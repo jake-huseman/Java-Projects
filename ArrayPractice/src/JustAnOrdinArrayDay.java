@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.lang.reflect.Array;
 
 public class JustAnOrdinArrayDay
 {
@@ -115,27 +113,30 @@ public class JustAnOrdinArrayDay
       int[] arr = new int[numBins];
 	  double range = min;
 
-	  for(int i = 0; i < data.length - 1; i++)
+	  for(int i = 0; i < arr.length; i++)
 	  {
-		  //int binIndex = (int) ((i - min) / binSize);
-		  if(data[i] >= range && data[i] <= range + binSize) // determining if data[i] is in the current range. May need fixed here
+		  for(int j = 0; j < data.length; j++)
 		  {
-				// increment arr[i] + 1
+			  if(data[j] >= range && data[j] < range + binSize) // determining if data[i] is in the current range.
+			  {
+				  arr[i] = arr[i] + 1;
+			  }
 		  }
-
+		  range = range + binSize;
 	  }
-
-
-
 	  return arr;
   }
 	public static void main(String[] args)
 	{
-		double[] data = new double[]{18.0, 15.0, 8.0, 16.0, 14.0, 19.0};
+		double[] data = new double[]{19.0, 20.0, 18.5, 19.5, 19.4, 24};
 		int numBins = 4;
 		double min = 2.0;
 		double max = 24.0;
-		System.out.println(sortIntoBins(data, numBins, min, max));
+		int[] x = sortIntoBins(data, numBins, min, max);
+		for(int i = 0; i < x.length; i++)
+		{
+			System.out.println(x[i]);
+		}
 	}
   
   /**
