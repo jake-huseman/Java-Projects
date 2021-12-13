@@ -106,9 +106,6 @@ public class JustAnOrdinArrayDay
 
   public static int[] sortIntoBins(double[] data, int numBins, double min, double max)
   {
-	  // Bin n - 1: min + (n - 1) * binSize <= x < max
-	  // where n = numBins.
-
       double binSize = (max - min) / numBins; // range increment value
       int[] arr = new int[numBins];
 	  double range = min;
@@ -128,15 +125,7 @@ public class JustAnOrdinArrayDay
   }
 	public static void main(String[] args)
 	{
-		double[] data = new double[]{19.0, 20.0, 18.5, 19.5, 19.4, 24};
-		int numBins = 4;
-		double min = 2.0;
-		double max = 24.0;
-		int[] x = sortIntoBins(data, numBins, min, max);
-		for(int i = 0; i < x.length; i++)
-		{
-			System.out.println(x[i]);
-		}
+		
 	}
   
   /**
