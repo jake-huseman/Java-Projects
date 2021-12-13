@@ -123,11 +123,7 @@ public class JustAnOrdinArrayDay
 	  }
 	  return arr;
   }
-	public static void main(String[] args)
-	{
-		
-	}
-  
+
   /**
    * Shifts the elements of the given array to the right by the given amount. 
    * Vacated cells are filled with zeros. 
@@ -144,36 +140,34 @@ public class JustAnOrdinArrayDay
    */ 
   public static void shiftRight(int[] arr, int amount)
   {
-	  if(amount > arr.length - 1)
+	  if(amount >= arr.length)
 	  {
-		  for(int i = 0; i < arr.length - 1; i++)
+		  for(int i = 0; i <= arr.length; i++)
 		  {
 			  arr[i] = 0;
 		  }
 	  }
-	  
-	  if(amount < 0)
+	  else if(amount < 0)
 	  {
-		  shiftLeft(arr, - amount);
+		  shiftLeft(arr, amount);
 	  }
-	  
-	  outerLoop:
-		  for(int b = arr.length - 1; b >= 0; b--)
+	  else
+	  {
+		  for(int i = 0; i < arr.length - amount; i++)
 		  {
-			  if(b < amount)
-			  {
-				  for(int c = 0; c < amount; c++)
-				  {
-					  arr[c] = 0;
-				  }
-				  break outerLoop;
-			  }
-			  arr[b] = arr[b - amount];
+				arr[amount + i] = arr[i];
+				arr[i] = 0;
+				arr[(amount - i) - 1] = 0;
 		  }
-		  
-}
-  
-  /**
+	  }
+  }
+	public static void main(String[] args)
+	{
+
+	}
+
+
+	/**
    * Shifts the elements of the given array to the left by the given amount. 
    * Vacated cells are filled with zeros. 
    * <em>Example:</em> if <code>arr</code> is [10, 20, 30. 40, 50, 60],
@@ -188,35 +182,9 @@ public class JustAnOrdinArrayDay
    *   amount of shift
    */
   public static void shiftLeft(int[] arr, int amount)
-  {  
-	  if(amount >= arr.length - 1)
-	  {
-	  	  for(int i = 0; i < arr.length - 1; i++)
-	  	  {
-	  		  arr[i] = 0;
-	  	  }
-	  }
+  {
 
-	  if(amount < 0)
-	  {
-	  	  shiftRight(arr, - amount);
-	  }
-
-	  outerLoop:
-	  	  for(int b = 0; b <= arr.length; b++)
-	  	  {
-	  		  if(b >= amount * 2)
-	  		  {
-	  			  for(int c = arr.length - 1; c >= arr.length - amount; c--)
-	  			  {
-	  				  arr[c] = 0;
-	  			  }
-	  			  break outerLoop;
-	  		  }
-	  		  arr[b] = arr[b + amount];
-	  	  }
-	  	  
-	 }
+  }
   
   /**
    * Cycles the elements of the given array by the given amount, rotating towards the
@@ -237,7 +205,7 @@ public class JustAnOrdinArrayDay
       int n = arr.length;
       int[] temp = new int[n];
 
-      if (n < 0) {
+      if(n < 0) {
            int index = 0;
 
            for (int i = 0; i < n; i++) {
