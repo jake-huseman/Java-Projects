@@ -142,7 +142,7 @@ public class JustAnOrdinArrayDay
   {
 	  if(amount >= arr.length)
 	  {
-		  for(int i = 0; i <= arr.length; i++)
+		  for(int i = 0; i < arr.length; i++)
 		  {
 			  arr[i] = 0;
 		  }
@@ -153,18 +153,16 @@ public class JustAnOrdinArrayDay
 	  }
 	  else
 	  {
-		  for(int i = 0; i < arr.length - amount; i++)
+		  for(int i = 0; i < amount; i++)
 		  {
-				arr[amount + i] = arr[i];
-				arr[i] = 0;
-				arr[(amount - i) - 1] = 0;
+			  for(int j = arr.length - 1; j > 0; j--)
+			  {
+				  arr[j] = arr[j - 1];
+			  }
+			  arr[i] = 0;
 		  }
 	  }
   }
-	public static void main(String[] args)
-	{
-
-	}
 
 
 	/**
@@ -185,6 +183,16 @@ public class JustAnOrdinArrayDay
   {
 
   }
+
+	public static void main(String[] args)
+	{
+		int arr[] = {10, 20, 30, 40, 50, 60};
+		shiftRight(arr, 5);
+		for(int value : arr)
+		{
+			System.out.print(value + ", ");
+		}
+	}
   
   /**
    * Cycles the elements of the given array by the given amount, rotating towards the
