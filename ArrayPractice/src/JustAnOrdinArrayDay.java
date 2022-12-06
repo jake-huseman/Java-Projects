@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+import static java.lang.Math.abs;
+
 public class JustAnOrdinArrayDay
 {
   /**
@@ -149,7 +151,7 @@ public class JustAnOrdinArrayDay
 	  }
 	  else if(amount < 0)
 	  {
-		  shiftLeft(arr, amount);
+		  shiftLeft(arr, abs(amount));
 	  }
 	  else
 	  {
@@ -181,13 +183,40 @@ public class JustAnOrdinArrayDay
    */
   public static void shiftLeft(int[] arr, int amount)
   {
+	  int l = arr.length;
+	  int temp[] = new int[l];
+	  int t = 0;
 
+	  if(amount >= l)
+	  {
+		  for(int i = 0; i < l; i++)
+		  {
+			  arr[i] = 0;
+		  }
+	  }
+	  else if(amount < 0)
+	  {
+		  shiftRight(arr, abs(amount));
+	  }
+	  else
+	  {
+		  for(int i = amount; i < l; i++)
+		  {
+			  temp[t] = arr[i];
+			  t++;
+		  }
+
+		  for(int i = 0; i < l; i ++)
+		  {
+			  arr[i] = temp[i];
+		  }
+	  }
   }
 
 	public static void main(String[] args)
 	{
 		int arr[] = {10, 20, 30, 40, 50, 60};
-		shiftRight(arr, 5);
+		shiftLeft(arr, -1);
 		for(int value : arr)
 		{
 			System.out.print(value + ", ");
