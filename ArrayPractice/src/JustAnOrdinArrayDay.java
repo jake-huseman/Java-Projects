@@ -185,7 +185,7 @@ public class JustAnOrdinArrayDay
   {
 	  int l = arr.length;
 	  int temp[] = new int[l];
-	  int t = 0;
+	  int index = 0;
 
 	  if(amount >= l)
 	  {
@@ -202,8 +202,8 @@ public class JustAnOrdinArrayDay
 	  {
 		  for(int i = amount; i < l; i++)
 		  {
-			  temp[t] = arr[i];
-			  t++;
+			  temp[index] = arr[i];
+			  index++;
 		  }
 
 		  for(int i = 0; i < l; i ++)
@@ -213,15 +213,6 @@ public class JustAnOrdinArrayDay
 	  }
   }
 
-	public static void main(String[] args)
-	{
-		int arr[] = {10, 20, 30, 40, 50, 60};
-		shiftLeft(arr, -1);
-		for(int value : arr)
-		{
-			System.out.print(value + ", ");
-		}
-	}
   
   /**
    * Cycles the elements of the given array by the given amount, rotating towards the
@@ -239,35 +230,30 @@ public class JustAnOrdinArrayDay
    */
   public static void cycle(int[] arr, int amount)
   {
-      int n = arr.length;
-      int[] temp = new int[n];
+      int l = arr.length;
+      int[] temp = new int[l];
+	  int index = l;
 
-      if(n < 0) {
-           int index = 0;
-
-           for (int i = 0; i < n; i++) {
-                index = (i + (n - amount)) % n;
-                temp[index] = arr[i];
-           }
-
-           for (int i = 0; i < n; i++) {
-                System.out.print(temp[i] + " ");
-           }
-      } 
-      else 
-      {
-           int index = 0;
-
-           for (int i = 0; i < n; i++) {
-                index = (i + (amount)) % n;
-                temp[index] = arr[i];
-           }
-      }
-      for(int i = 0; i < arr.length; i++)
-      {
-    	  arr[i] = temp[i];
-      }
+	  if(amount < 0)
+	  {
+		  int posValue = abs(amount);
+		  for(int i = posValue; i < l; i++)
+		  {
+			  temp[index - posValue] = arr[i];
+			  index++;
+		  }
+	  }
   }
+
+	public static void main(String[] args)
+	{
+		int arr[] = {10, 20, 30, 40, 50, 60};
+		cycle(arr, -1);
+		for(int value : arr)
+		{
+			System.out.print(value + ", ");
+		}
+	}
 
   
   /**
@@ -295,7 +281,7 @@ public class JustAnOrdinArrayDay
 	    }
 	  }
 	  if(i<length) arr[i]=null;
-	    return arr;
+	  	return arr;
 	} 
   
   /**
